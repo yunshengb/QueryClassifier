@@ -9,37 +9,17 @@ import cPickle
 
 NEWLINE = '\n'
 
-HAM = 'ham'
+GENERAL = 'general'
 CALENDAR = 'calendar'
+IMM = "imm"
 
 SOURCES = [
-    ('../calendar_ham/calendar/calendar_questions.txt',        CALENDAR),
-    ('../calendar_ham/ham/questions_80.txt',    HAM)
+    ('../data/calendar/calendar_questions.txt',         CALENDAR),
+    ('../data/general/questions_80.txt',                GENERAL),
+    ('../data/imm/imm_questions.txt',                IMM)
 ]
 
 SKIP_FILES = {'cmds'}
-
-
-# def read_files(path):
-#     for root, dir_names, file_names in os.walk(path):
-#         for path in dir_names:
-#             read_files(os.path.join(root, path))
-#         for file_name in file_names:
-#             if file_name not in SKIP_FILES:
-#                 file_path = os.path.join(root, file_name)
-#                 if os.path.isfile(file_path):
-#                     past_header, lines = False, []
-#                     f = open(file_path)
-#                     for line in f:
-#                         if past_header:
-#                             lines.append(line)
-#                         elif line == NEWLINE:
-#                             past_header = True
-#                     f.close()
-#                     content = NEWLINE.join(lines)
-#                     yield file_path, content
-
-
 
 def build_data_frame(path, classification):
     lines = [line.rstrip('\n') for line in open(path)]
@@ -80,14 +60,14 @@ for train_indices, test_indices in k_fold:
     pipeline.fit(train_text, train_y)
     predictions = pipeline.predict(test_text)
 
-    confusion += confusion_matrix(test_y, predictions)
+#     confusion += confusion_matrix(test_y, predictions)
     score = f1_score(test_y, predictions, pos_label=CALENDAR)
     scores.append(score)
 
 print('Total documents classified:', len(data))
 print('Score:', sum(scores)/len(scores))
-print('Confusion matrix:')
-print(confusion)
+# print('Confusion matrix:')
+# print(confusion)
  
 # save the classifier
 with open('my_dumped_classifier.pkl', 'wb') as fid:

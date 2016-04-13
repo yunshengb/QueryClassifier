@@ -11,6 +11,6 @@ import cPickle
 with open('my_dumped_classifier.pkl', 'rb') as fid:
     pipeline = cPickle.load(fid)
 
-examples = ['What are my future events?', "What is on Johann's calendar?", "Who is the president of China?"]
+examples = ['What are my future events?', "What is the height of this building?", "Who is the president of China?"]
 predictions = pipeline.predict(examples)
 print(predictions)
