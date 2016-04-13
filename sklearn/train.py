@@ -5,6 +5,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import KFold
 from sklearn.metrics import confusion_matrix, f1_score
+import cPickle
 
 NEWLINE = '\n'
 
@@ -87,7 +88,7 @@ print('Total documents classified:', len(data))
 print('Score:', sum(scores)/len(scores))
 print('Confusion matrix:')
 print(confusion)
-
-examples = ['What are my future events?', "What is on Johann's calendar?", "Who is the president of China?"]
-predictions = pipeline.predict(examples)
-print(predictions)
+ 
+# save the classifier
+with open('my_dumped_classifier.pkl', 'wb') as fid:
+    cPickle.dump(pipeline, fid)
