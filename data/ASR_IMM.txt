@@ -7,7 +7,6 @@ Who is in the image?
 Who appears in it?
 Who shows up in the photo?
 Who are in this picture?
-Who is in this picture?
 Who is in this uploaded image?
 Who is it?
 Who is thsi guy?
@@ -106,6 +105,3 @@ Do an image search.
 Perform an image search.
 Perform an image matching.
 Perform a photo matching task.
-
-
-

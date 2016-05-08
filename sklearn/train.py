@@ -1,7 +1,7 @@
 import numpy
 from pandas import DataFrame
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.naive_bayes import *
 from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import KFold
 from sklearn.metrics import confusion_matrix, f1_score
@@ -24,6 +24,9 @@ def build_data_frame(path, classification):
     rows = []
     index = []
     for text in lines:
+        if text in index:
+            print 'duplicate in ' + path + ": " + text
+            exit(1)
         rows.append({'text': text, 'class': classification})
         index.append(text)
 
@@ -39,9 +42,10 @@ data = data.reindex(numpy.random.permutation(data.index))
 pipeline = Pipeline([
     ('count_vectorizer',   CountVectorizer(ngram_range = (1, 2))),
     ('classifier',         MultinomialNB())
+    # ('classifier',         BernoulliNB()) 
 ])
 
-k_fold = KFold(n=len(data), n_folds=3)
+k_fold = KFold(n=len(data), n_folds=6)
 scores = []
 confusion = numpy.array([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
 for train_indices, test_indices in k_fold:
@@ -58,6 +62,7 @@ for train_indices, test_indices in k_fold:
     score = f1_score(test_y, predictions, average='weighted')
     scores.append(score)
 
+print('************************* Scikit Learn *************************')
 print('Total documents classified:', len(data))
 print('Score:', sum(scores) / len(scores))
 print('Confusion matrix:')

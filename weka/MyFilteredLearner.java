@@ -59,6 +59,7 @@ public class MyFilteredLearner {
 		}
 		catch (IOException e) {
 			System.out.println("Problem found when reading: " + fileName);
+			System.out.println(e);
 		}
 	}
 	
@@ -76,13 +77,14 @@ public class MyFilteredLearner {
 			classifier.setFilter(filter);
 			classifier.setClassifier(new NaiveBayes());
 			Evaluation eval = new Evaluation(trainData);
-			eval.crossValidateModel(classifier, trainData, 4, new Random(1));
+			eval.crossValidateModel(classifier, trainData, 6, new Random(1));
 			System.out.println(eval.toSummaryString());
 			System.out.println(eval.toClassDetailsString());
 			System.out.println("===== Evaluating on filtered (training) dataset done =====");
 		}
 		catch (Exception e) {
 			System.out.println("Problem found when evaluating");
+			System.out.println(e);
 		}
 	}
 	
@@ -104,6 +106,7 @@ public class MyFilteredLearner {
 		}
 		catch (Exception e) {
 			System.out.println("Problem found when training");
+			System.out.println(e);
 		}
 	}
 	
@@ -121,6 +124,7 @@ public class MyFilteredLearner {
         } 
 		catch (IOException e) {
 			System.out.println("Problem found when writing: " + fileName);
+			System.out.println(e);
 		}
 	}
 	
@@ -134,6 +138,7 @@ public class MyFilteredLearner {
 		if (args.length < 2)
 			System.out.println("Usage: java MyLearner <fileData> <fileModel>");
 		else {
+			System.out.println("************************* Weka *************************");
 			learner = new MyFilteredLearner();
 			learner.loadDataset(args[0]);
 			// Evaluation mus be done before training

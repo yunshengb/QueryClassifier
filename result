@@ -1,0 +1,32 @@
+************************* Scikit Learn *************************
+('Total documents classified:', 341)
+('Score:', 0.87942703446646264)
+Confusion matrix:
+[[ 42   0   1   2]
+ [  0 106   0   1]
+ [  0   4  40   4]
+ [  5  11  13 112]]
+************************* Weka *************************
+===== Loaded dataset: data.arff =====
+
+Correctly Classified Instances         300               87.9765 %
+Incorrectly Classified Instances        41               12.0235 %
+Kappa statistic                          0.8262
+Mean absolute error                      0.069 
+Root mean squared error                  0.2156
+Relative absolute error                 19.8937 %
+Root relative squared error             51.7853 %
+Total Number of Instances              341     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.844     0.003      0.974     0.844     0.905      0.994    ASR_CA
+                 0.972     0.073      0.86      0.972     0.912      0.989    ASR_IMM
+                 0.771     0.034      0.787     0.771     0.779      0.974    ASR_IMM_QA
+                 0.858     0.065      0.903     0.858     0.88       0.969    ASR_QA
+Weighted Avg.    0.88      0.055      0.882     0.88      0.879      0.979
+
+===== Evaluating on filtered (training) dataset done =====
+===== Training on filtered (training) dataset done =====
+===== Saved model: myClassifier.dat =====
