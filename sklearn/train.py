@@ -7,19 +7,17 @@ from sklearn.cross_validation import KFold
 from sklearn.metrics import confusion_matrix, f1_score
 import cPickle
 
-NEWLINE = '\n'
-
-GENERAL = 'general'
-CALENDAR = 'calendar'
-IMM = "imm"
+ASR_QA = 'ASR_QA'
+ASR_IMM = 'ASR_IMM'
+ASR_IMM_QA = 'ASR_IMM_QA'
+ASR_CA = 'ASR_CA'
 
 SOURCES = [
-    ('../data/calendar/calendar_questions.txt',         CALENDAR),
-    ('../data/general/questions_80.txt',                GENERAL),
-    ('../data/imm/imm_questions.txt',                IMM)
+    ('../data/ASR_QA.txt',                 ASR_QA),
+    ('../data/ASR_IMM.txt',                ASR_IMM),
+    ('../data/ASR_IMM_QA.txt',             ASR_IMM_QA),
+    ('../data/ASR_CA.txt',                 ASR_CA)
 ]
-
-SKIP_FILES = {'cmds'}
 
 def build_data_frame(path, classification):
     lines = [line.rstrip('\n') for line in open(path)]
@@ -32,24 +30,20 @@ def build_data_frame(path, classification):
     data_frame = DataFrame(rows, index=index)
     return data_frame
 
-
 data = DataFrame({'text': [], 'class': []})
 for path, classification in SOURCES:
     data = data.append(build_data_frame(path, classification))
 
-
-
-
 data = data.reindex(numpy.random.permutation(data.index))
 
 pipeline = Pipeline([
-    ('count_vectorizer',   CountVectorizer(ngram_range=(1, 2))),
+    ('count_vectorizer',   CountVectorizer(ngram_range = (1, 2))),
     ('classifier',         MultinomialNB())
 ])
 
 k_fold = KFold(n=len(data), n_folds=3)
 scores = []
-confusion = numpy.array([[0, 0], [0, 0]])
+confusion = numpy.array([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]])
 for train_indices, test_indices in k_fold:
     train_text = data.iloc[train_indices]['text'].values
     train_y = data.iloc[train_indices]['class'].values.astype(str)
@@ -60,14 +54,14 @@ for train_indices, test_indices in k_fold:
     pipeline.fit(train_text, train_y)
     predictions = pipeline.predict(test_text)
 
-#     confusion += confusion_matrix(test_y, predictions)
-    score = f1_score(test_y, predictions, pos_label=CALENDAR)
+    confusion += confusion_matrix(test_y, predictions)
+    score = f1_score(test_y, predictions, average='weighted')
     scores.append(score)
 
 print('Total documents classified:', len(data))
-print('Score:', sum(scores)/len(scores))
-# print('Confusion matrix:')
-# print(confusion)
+print('Score:', sum(scores) / len(scores))
+print('Confusion matrix:')
+print(confusion)
  
 # save the classifier
 with open('my_dumped_classifier.pkl', 'wb') as fid:

@@ -31,3 +31,18 @@ How much area does this landmark occupy?
 How much does it cost to enter this?
 How much does it cost to enter the landmark shown in the photo?
 How much does it cost to enter the building in the photo?
+How much does this flower cost?
+How much does this cost?
+Where can I buy this?
+Who is this book by?
+Who is this by?
+Can I buy this book on Amazon?
+Where is the cheapest place to buy this?
+When was this made?
+When was this book published?
+Can I get an audiobook of this book?
+Where does he live?
+Where did the person in the photo love?
+Where is he from?
+Does he speak english?
+Do I know this person? 
