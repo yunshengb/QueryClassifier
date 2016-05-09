@@ -5,3 +5,5 @@
 sklearn/.*
 *.class
 *.pyc
+Spielwiese2
+*.tar.gz

@@ -12,15 +12,28 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-import weka.core.Instances;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.StringToWordVector;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import java.util.Random;
 import weka.classifiers.bayes.NaiveBayes;
+// import weka.classifiers.bayes.NaiveBayesMultinomialText;
 import weka.classifiers.meta.FilteredClassifier;
+import weka.classifiers.trees.J48;
+import weka.classifiers.trees.RandomForest;
+import weka.core.Instances;
+import weka.core.SelectedTag;
+import weka.core.converters.ArffLoader;
+import weka.core.stemmers.IteratedLovinsStemmer;
+import weka.core.stemmers.LovinsStemmer;
+import weka.core.stemmers.SnowballStemmer;
+// import weka.core.stopwords.Rainbow;
+import weka.core.tokenizers.CharacterDelimitedTokenizer;
+import weka.core.tokenizers.NGramTokenizer;
+import weka.core.tokenizers.Tokenizer;
+import weka.core.tokenizers.WordTokenizer;
+import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.core.converters.ArffLoader.ArffReader;
 import java.io.*;
+import java.util.Random;
 
 /**
  * This class implements a simple text learner in Java using WEKA.
@@ -43,7 +56,7 @@ public class MyFilteredLearner {
 	 * Object that stores the classifier
 	 */
 	FilteredClassifier classifier;
-		
+
 	/**
 	 * This method loads a dataset in ARFF format. If the file does not exist, or
 	 * it has a wrong format, the attribute trainData is null.
@@ -62,7 +75,7 @@ public class MyFilteredLearner {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
 	 * This method evaluates the classifier. As recommended by WEKA documentation,
 	 * the classifier is defined but not trained yet. Evaluation of previously
@@ -70,12 +83,7 @@ public class MyFilteredLearner {
 	 */
 	public void evaluate() {
 		try {
-			trainData.setClassIndex(0);
-			filter = new StringToWordVector();
-			filter.setAttributeIndices("last");
-			classifier = new FilteredClassifier();
-			classifier.setFilter(filter);
-			classifier.setClassifier(new NaiveBayes());
+			configure();
 			Evaluation eval = new Evaluation(trainData);
 			eval.crossValidateModel(classifier, trainData, 6, new Random(1));
 			System.out.println(eval.toSummaryString());
@@ -87,18 +95,13 @@ public class MyFilteredLearner {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
 	 * This method trains the classifier on the loaded dataset.
 	 */
 	public void learn() {
 		try {
-			trainData.setClassIndex(0);
-			filter = new StringToWordVector();
-			filter.setAttributeIndices("last");
-			classifier = new FilteredClassifier();
-			classifier.setFilter(filter);
-			classifier.setClassifier(new NaiveBayes());
+			configure();
 			classifier.buildClassifier(trainData);
 			// Uncomment to see the classifier
 			// System.out.println(classifier);
@@ -109,7 +112,7 @@ public class MyFilteredLearner {
 			System.out.println(e);
 		}
 	}
-	
+
 	/**
 	 * This method saves the trained model into a file. This is done by
 	 * simple serialization of the classifier object.
@@ -117,23 +120,43 @@ public class MyFilteredLearner {
 	 */
 	public void saveModel(String fileName) {
 		try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
-            out.writeObject(classifier);
-            out.close();
- 			System.out.println("===== Saved model: " + fileName + " =====");
-        } 
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+			out.writeObject(classifier);
+			out.close();
+			System.out.println("===== Saved model: " + fileName + " =====");
+		} 
 		catch (IOException e) {
 			System.out.println("Problem found when writing: " + fileName);
 			System.out.println(e);
 		}
 	}
-	
+
+	private void configure() {
+		trainData.setClassIndex(0);
+		filter = new StringToWordVector();
+		filter.setAttributeIndices("last");
+		filter.setIDFTransform(true);
+		filter.setTFTransform(true);
+		SnowballStemmer snowballStemmer = new SnowballStemmer();
+    snowballStemmer.setStemmer("english");
+    filter.setStemmer(snowballStemmer);
+    //AlphabeticTokenizer, CharacterDelimitedTokenizer, NGramTokenizer, WordTokenizer
+    Tokenizer tokenizer = new WordTokenizer(); //Word Tokenizer better than NGramTokenizer
+    
+    filter.setTokenizer(tokenizer);
+		classifier = new FilteredClassifier();
+		classifier.setFilter(filter);
+		//classifier.setClassifier(new NaiveBayes());
+		classifier.setClassifier(new RandomForest());
+		//classifier.setClassifier(new J48());
+	}
+
 	/**
 	 * Main method. It is an example of the usage of this class.
 	 * @param args Command-line arguments: fileData and fileModel.
 	 */
 	public static void main (String[] args) {
-	
+
 		MyFilteredLearner learner;
 		if (args.length < 2)
 			System.out.println("Usage: java MyLearner <fileData> <fileModel>");

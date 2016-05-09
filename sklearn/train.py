@@ -1,7 +1,17 @@
 import numpy
 from pandas import DataFrame
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.naive_bayes import *
+from sklearn.linear_model import RidgeClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+from sklearn.linear_model import SGDClassifier
+from sklearn.linear_model import Perceptron
+from sklearn.linear_model import PassiveAggressiveClassifier
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import NearestCentroid
+from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import KFold
 from sklearn.metrics import confusion_matrix, f1_score
@@ -41,8 +51,8 @@ data = data.reindex(numpy.random.permutation(data.index))
 
 pipeline = Pipeline([
     ('count_vectorizer',   CountVectorizer(ngram_range = (1, 2))),
-    ('classifier',         MultinomialNB())
-    # ('classifier',         BernoulliNB()) 
+#     ('classifier',         PassiveAggressiveClassifier())
+    ('classifier',         LinearSVC()) 
 ])
 
 k_fold = KFold(n=len(data), n_folds=6)
