@@ -1,31 +1,33 @@
 ************************* Scikit Learn *************************
 ('Total documents classified:', 341)
-('Score:', 0.87942703446646264)
+('Score:', 0.93125932776657461)
 Confusion matrix:
 [[ 42   0   1   2]
- [  0 106   0   1]
- [  0   4  40   4]
- [  5  11  13 112]]
+ [  0 107   0   0]
+ [  0   5  41   2]
+ [  3   4   6 128]]
 ************************* Weka *************************
 ===== Loaded dataset: data.arff =====
 
-Correctly Classified Instances         300               87.9765 %
-Incorrectly Classified Instances        41               12.0235 %
-Kappa statistic                          0.8262
-Mean absolute error                      0.069 
-Root mean squared error                  0.2156
-Relative absolute error                 19.8937 %
-Root relative squared error             51.7853 %
+Correctly Classified Instances         309               90.6158 %
+Incorrectly Classified Instances        32                9.3842 %
+Kappa statistic                          0.8657
+Mean absolute error                      0.1237
+Root mean squared error                  0.2069
+Relative absolute error                 35.6345 %
+Root relative squared error             49.6941 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)      59.6041 %
 Total Number of Instances              341     
 
 === Detailed Accuracy By Class ===
 
-               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
-                 0.844     0.003      0.974     0.844     0.905      0.994    ASR_CA
-                 0.972     0.073      0.86      0.972     0.912      0.989    ASR_IMM
-                 0.771     0.034      0.787     0.771     0.779      0.974    ASR_IMM_QA
-                 0.858     0.065      0.903     0.858     0.88       0.969    ASR_QA
-Weighted Avg.    0.88      0.055      0.882     0.88      0.879      0.979
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.933    0.007    0.955      0.933    0.944      0.935    0.997     0.985     ASR_CA
+                 1.000    0.068    0.870      1.000    0.930      0.900    0.997     0.992     ASR_IMM
+                 0.875    0.027    0.840      0.875    0.857      0.833    0.985     0.904     ASR_IMM_QA
+                 0.837    0.030    0.952      0.837    0.891      0.826    0.980     0.975     ASR_QA
+Weighted Avg.    0.906    0.039    0.911      0.906    0.905      0.865    0.988     0.971     
 
 ===== Evaluating on filtered (training) dataset done =====
 ===== Training on filtered (training) dataset done =====

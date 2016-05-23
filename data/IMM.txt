@@ -37,6 +37,17 @@ What can yoy identify in it?
 What are you identifying this image as?
 What category does it fit into?
 What does it represent?
+What is the name of it?
+What is the name of this?
+What is the name of this fish?
+What is the name of this car?
+What is the name of this person?
+What is the name of this man?
+What is the name of this woman?
+What is the name of this boy?
+What is the name of this girl?
+What is the name of this airplane?
+What is the name of this computer?
 What is its name?
 What is its label?
 What is its identity?
@@ -45,13 +56,23 @@ What is the name of this image?
 What is the label of this thing?
 What is the identity of this object?
 What is the tag of this item?
-What car is this?
-What is the name of this car?
 What is this building?
-What is the name of this person?
 What is this?
+What is it called?
+What is this object called?
+What is this thing called?
+What is this restaurant called?
+What is this shop named?
+What is this mall named?
+What is this museum called?
+What is this building named?
+What car is this?
+What restaurant is it?
+What island is it called?
+What country is it?
 Which car is it?
 Which kind of car is this?
+Which restaurant is it?
 Who is this?
 Have I already saved this image?
 Is there any picture in my album that is similar to this?
@@ -68,6 +89,8 @@ Match this image.
 Match it.
 Match the photo, please.
 Match the image I am uploading.
+Match.
+Match this picture.
 Can you do an image matching?
 Can you match this image?
 Can you do a photo search?
